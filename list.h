@@ -2,6 +2,9 @@
 #include <cstdlib>
 #include <cstdio>
 
+//int array null terminator = maximum integer value
+#define NULL_TERMINATOR 2147483647;
+
 typedef struct node{
     node* previousNode;
     node* nextNode;
@@ -172,7 +175,7 @@ void pushToListAt(node* head, int data, int index)
 int* copyListToArray(node* head)
 {
     int listLength = getListLength(head);
-    int* array = (int*)malloc(sizeof(int) * listLength);
+    int* array = (int*)malloc(sizeof(int) * (listLength +1));
 
     node* currentNode = head;
 
@@ -181,6 +184,50 @@ int* copyListToArray(node* head)
         array[i] = currentNode->data;
         currentNode = currentNode->nextNode;
     }
+    array[listLength+1] = NULL_TERMINATOR;
     return array;
 }
 
+//function for qsort
+int comp (const void * elem1, const void * elem2)
+{
+    int f = *((int*)elem1);
+    int s = *((int*)elem2);
+    if (f > s) return  1;
+    if (f < s) return -1;
+    return 0;
+}
+
+void sortListAscending(node* head)
+{
+    node* currentNode = head;
+
+    int* array = copyListToArray(head);
+    int sizeOfArray = 0;
+    int i = 0;
+    while(true)
+    {
+        //nullTerminator value has to be set to NULL_TERMINATOR value,
+        // because a compiler error occurs if NULL_TERMINATOR is used directly in the if statement
+        int nullTerminator = NULL_TERMINATOR;
+        if(array[i] == nullTerminator){ break; }
+        i++;
+        sizeOfArray++;
+    }
+
+    //sort array
+    qsort(array, sizeOfArray-1, sizeof(int), comp);
+
+    //write sorted array values back to list
+    int counter = 0;
+    while(currentNode->isTail == false)
+    {
+        currentNode->data = array[counter];
+        counter++;
+        currentNode = currentNode->nextNode;
+    }
+    if(currentNode->isTail == true)
+    {
+        currentNode->data = array[counter];
+    }
+}
