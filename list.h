@@ -104,8 +104,6 @@ bool searchList(node* head, int data)
 
 void pushToListAt(node* head, int data, int index)
 {
-    //TODO link previous node pointers, currently newNode is only attached in the forward direction
-
     node* currentNode = head;
     node* newNode = createList(data);
     newNode->isHead = false;
@@ -113,37 +111,41 @@ void pushToListAt(node* head, int data, int index)
 
     int position = 0;
 
-    if(index+1 >= getListLength(head))
+    if(index > getListLength(head) || index < 0)
         return;
+    //last node in list
+    else if(index == getListLength(head))
+    {
+        pushToList(head, data);
+        return;
+    }
 
-    while(currentNode->isTail == false)
+    while(position <= index)
     {
         if(position == index)
         {
             newNode->nextNode = currentNode;
-            currentNode->previousNode = newNode;
+            //currentNode->previousNode = newNode;
             if(currentNode->isHead == false)
             {
-                //currentNode->previousNode->nextNode = newNode;
-                currentNode = currentNode->previousNode;
+                newNode->previousNode = currentNode->previousNode;
+                newNode->previousNode->nextNode = newNode;
+                newNode->nextNode->previousNode = newNode;
+            }
+            // if a new node is added at the start of the list, the new node is added right after the head, and its data is swapped with the head,
+            // this gets the same result as adding the node before the head while avoiding a few bugs
+            else if(currentNode->isHead == true)
+            {
+                newNode->nextNode = currentNode->nextNode;
                 currentNode->nextNode = newNode;
-                //newNode->previousNode = currentNode->previousNode;
+                newNode->previousNode = currentNode;
+                int tempData = currentNode->data;
+                currentNode->data = newNode->data;
+                newNode->data = tempData;
             }
             return;
         }
         position++;
         currentNode = currentNode->nextNode;
     }
-    //last node in list
-    if(position == index)
-    {
-        newNode->nextNode = currentNode;
-        currentNode->previousNode = newNode;
-        if(currentNode->isHead != true)
-        {
-            currentNode = currentNode->previousNode;
-            currentNode->nextNode = newNode;
-        }
-    }
 }
-

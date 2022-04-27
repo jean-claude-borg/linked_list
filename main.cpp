@@ -10,7 +10,7 @@ int main()
     pushToList(list, 74);
     pushToList(list, 75);
 
-    pushToListAt(list, 100, 3);
+    pushToListAt(list,100,5);
     printList(list);
 
     return 0;
