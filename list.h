@@ -55,6 +55,24 @@ void printList(node* head)
         printf("\n%d", currentNode->data);
 }
 
+void printListReverse(node*head)
+{
+    node* currentNode = head;
+    while(currentNode->isTail == false)
+    {
+        currentNode = currentNode->nextNode;
+    }
+    while(currentNode->isHead == false)
+    {
+        printf("\n%d", currentNode->data);
+        currentNode = currentNode->previousNode;
+    }
+    if(currentNode->isHead == true)
+    {
+        printf("\n%d", currentNode->data);
+    }
+}
+
 void popFromList(node* head)
 {
     node* currentNode = head;
@@ -137,6 +155,7 @@ void pushToListAt(node* head, int data, int index)
             else if(currentNode->isHead == true)
             {
                 newNode->nextNode = currentNode->nextNode;
+                currentNode->nextNode->previousNode = newNode;
                 currentNode->nextNode = newNode;
                 newNode->previousNode = currentNode;
                 int tempData = currentNode->data;
@@ -149,3 +168,19 @@ void pushToListAt(node* head, int data, int index)
         currentNode = currentNode->nextNode;
     }
 }
+
+int* copyListToArray(node* head)
+{
+    int listLength = getListLength(head);
+    int* array = (int*)malloc(sizeof(int) * listLength);
+
+    node* currentNode = head;
+
+    for(int i = 0; i < listLength; i++)
+    {
+        array[i] = currentNode->data;
+        currentNode = currentNode->nextNode;
+    }
+    return array;
+}
+

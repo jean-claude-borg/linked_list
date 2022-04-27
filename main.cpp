@@ -6,12 +6,11 @@ int main()
     pushToList(list,70);
     pushToList(list, 71);
     pushToList(list, 72);
-    pushToList(list, 73);
-    pushToList(list, 74);
-    pushToList(list, 75);
 
-    pushToListAt(list,100,5);
+    pushToListAt(list,100,0);
     printList(list);
+    printf("\n--------------------------");
+    printListReverse(list);
 
     return 0;
 }
