@@ -14,6 +14,9 @@ int main()
     printf("\n--------------------------");
     printList(list);
 
+    deleteList(list, &list);
+    printList(list);
+
     return 0;
 }
 

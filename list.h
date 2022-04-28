@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <cstdio>
 
-//int array null terminator = maximum integer value
+//int array null terminator = maximum integer value(arbitrary)
 #define NULL_TERMINATOR 2147483647;
 
 typedef struct node{
@@ -28,6 +28,12 @@ node* createList(int data)
 
 void pushToList(node* head, int data)
 {
+    if(head == nullptr)
+    {
+        fprintf(stderr, "\nError: Given list does not exist");
+        return;
+    }
+
     node* newNode = createList(data);
     newNode->isHead = false;
     newNode->isTail = true;
@@ -48,6 +54,12 @@ void pushToList(node* head, int data)
 
 void printList(node* head)
 {
+    if(head == nullptr)
+    {
+        fprintf(stderr, "\nError: Given list does not exist");
+        return;
+    }
+
     node* currentNode = head;
     while(currentNode->isTail == false)
     {
@@ -60,6 +72,12 @@ void printList(node* head)
 
 void printListReverse(node*head)
 {
+    if(head == nullptr)
+    {
+        fprintf(stderr, "\nError: Given list does not exist");
+        return;
+    }
+
     node* currentNode = head;
     while(currentNode->isTail == false)
     {
@@ -78,6 +96,12 @@ void printListReverse(node*head)
 
 void popFromList(node* head)
 {
+    if(head == nullptr)
+    {
+        fprintf(stderr, "\nError: Given list does not exist");
+        return;
+    }
+
     node* currentNode = head;
     while(currentNode->isTail == false)
     {
@@ -93,6 +117,12 @@ void popFromList(node* head)
 
 int getListLength(node* head)
 {
+    if(head == nullptr)
+    {
+        fprintf(stderr, "\nError: Given list does not exist");
+        return 0;
+    }
+
     int length = 0;
     node* currentNode = head;
     while(currentNode->isTail == false)
@@ -108,6 +138,12 @@ int getListLength(node* head)
 
 bool searchList(node* head, int data)
 {
+    if(head == nullptr)
+    {
+        fprintf(stderr, "\nError: Given list does not exist");
+        return false;
+    }
+
     node* currentNode = head;
     while(currentNode->isTail == false)
     {
@@ -125,6 +161,12 @@ bool searchList(node* head, int data)
 
 void pushToListAt(node* head, int data, int index)
 {
+    if(head == nullptr)
+    {
+        fprintf(stderr, "\nError: Given list does not exist");
+        return;
+    }
+
     node* currentNode = head;
     node* newNode = createList(data);
     newNode->isHead = false;
@@ -174,6 +216,12 @@ void pushToListAt(node* head, int data, int index)
 
 int* copyListToArray(node* head)
 {
+    if(head == nullptr)
+    {
+        fprintf(stderr, "\nError: Given list does not exist");
+        return nullptr;
+    }
+
     int listLength = getListLength(head);
     int* array = (int*)malloc(sizeof(int) * (listLength +1));
 
@@ -184,7 +232,8 @@ int* copyListToArray(node* head)
         array[i] = currentNode->data;
         currentNode = currentNode->nextNode;
     }
-    array[listLength+1] = NULL_TERMINATOR;
+    //array[listLength+1] = NULL_TERMINATOR;
+    array[listLength] = NULL_TERMINATOR;
     return array;
 }
 
@@ -200,6 +249,15 @@ int comp (const void * elem1, const void * elem2)
 
 void sortListAscending(node* head)
 {
+    if(head == nullptr)
+    {
+        fprintf(stderr, "\nError: Given list does not exist");
+        return;
+    }
+
+    //this function copies the list to an array,
+    //sorts the array using qsort,
+    //then copies the array values back to the list, thus sorting the list
     node* currentNode = head;
 
     int* array = copyListToArray(head);
@@ -214,9 +272,10 @@ void sortListAscending(node* head)
         i++;
         sizeOfArray++;
     }
+    //printf("\nSize:\t%d", sizeOfArray);
 
     //sort array
-    qsort(array, sizeOfArray-1, sizeof(int), comp);
+    qsort(array, sizeOfArray, sizeof(int), comp);
 
     //write sorted array values back to list
     int counter = 0;
@@ -230,4 +289,20 @@ void sortListAscending(node* head)
     {
         currentNode->data = array[counter];
     }
+    //printf("\nLength:\t%d", getListLength(head));
+    free(array);
+}
+
+//TODO Add sortListDescending, popFromListAt, mergeLists, mergeListsAt, check for empty list(nullptr) before executing any functions
+
+void deleteList(node* head, node** headPtr)
+{
+    node* currentNode = head;
+    while(currentNode->isTail == false)
+    {
+        node* next = currentNode->nextNode;
+        free(currentNode);
+        currentNode = next;
+    }
+    *headPtr = nullptr;
 }
