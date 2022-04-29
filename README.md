@@ -14,4 +14,4 @@ __int* copyListToArray(node* head):__ <br> &emsp;     copies the entire list to 
 __void sortListAscending(node* head):__ <br> &emsp;   sorts the given list in ascending order\
 __void deleteList(node* head, node** headPtr):__ <br> &emsp;  deallocates every node in the list\
 __void popFromListAt(node* head, int index):__ <br> &emsp;    removes the node in the list corresponging to the given index\
-__void mergeLists(node* head1, node* head2):__ <br> &emsp;    appends list2 to the tail of list1\
+__void mergeLists(node* head1, node* head2):__ <br> &emsp;    appends list2 to the tail of list1
