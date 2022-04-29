@@ -105,7 +105,7 @@ void popFromList(node* head)
     }
     else if(getListLength(head) == 1)
     {
-        deleteList(head, &head);
+        fprintf(stderr, "\nError: cannot pop from a list with a single node, use deleteList() instead");
         return;
     }
 
@@ -300,7 +300,7 @@ void sortListAscending(node* head)
     free(array);
 }
 
-//TODO Add sortListDescending, popFromListAt, mergeLists, mergeListsAt
+//TODO Add sortListDescending, mergeLists, mergeListsAt
 
 void deleteList(node* head, node** headPtr)
 {
@@ -366,6 +366,12 @@ void popFromListAt(node* head, int index)
     //index starts counting from 0 while getListLength starts counting from 1
     else if(index == getListLength(head)-1)
     {
-        popFromList(head);
+        fprintf(stderr, "\nError: cannot pop from list with a single node, use deleteList() instead");
+        return;
     }
+}
+
+void mergeLists()
+{
+    
 }

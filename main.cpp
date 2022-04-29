@@ -17,8 +17,8 @@ int main()
     popFromListAt(list, 0);
 
     printf("\n--------------------------");
-    printf("\nLength:\t%d", getListLength(list));
     printList(list);
+    deleteList(list, &list);
 
     return 0;
 }
