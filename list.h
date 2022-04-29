@@ -14,6 +14,8 @@ typedef struct node{
 }node;
 
 typedef node* list;
+void deleteList(node* head, node** headPtr);
+int getListLength(node* head);
 
 node* createList(int data)
 {
@@ -99,6 +101,11 @@ void popFromList(node* head)
     if(head == nullptr)
     {
         fprintf(stderr, "\nError: Given list does not exist");
+        return;
+    }
+    else if(getListLength(head) == 1)
+    {
+        deleteList(head, &head);
         return;
     }
 
@@ -293,16 +300,72 @@ void sortListAscending(node* head)
     free(array);
 }
 
-//TODO Add sortListDescending, popFromListAt, mergeLists, mergeListsAt, check for empty list(nullptr) before executing any functions
+//TODO Add sortListDescending, popFromListAt, mergeLists, mergeListsAt
 
 void deleteList(node* head, node** headPtr)
 {
     node* currentNode = head;
-    while(currentNode->isTail == false)
+    while(currentNode->isTail == false && getListLength(head) > 1)
     {
         node* next = currentNode->nextNode;
         free(currentNode);
         currentNode = next;
+        *headPtr = nullptr;
+        return;
     }
-    *headPtr = nullptr;
+    if(getListLength(head) == 1)
+    {
+        free(*headPtr);
+        *headPtr = nullptr;
+        return;
+    }
+}
+
+void popFromListAt(node* head, int index)
+{
+    if(head == nullptr)
+    {
+        fprintf(stderr,"\nError: list does not exist");
+        return;
+    }
+    if(index < 0 || index > getListLength(head))
+    {
+        fprintf(stderr, "\nError: invalid list index for deletion");
+        return;
+    }
+
+    node* currentNode = head;
+    for(int i = 0; i < index; i++)
+        currentNode = currentNode->nextNode;
+
+    if(currentNode->isHead == false && currentNode->isTail == false)
+    {
+        currentNode->previousNode->nextNode = currentNode->nextNode;
+        currentNode->nextNode->previousNode = currentNode->previousNode;
+        free(currentNode);
+    }
+    else if(currentNode->isHead && getListLength(head) > 2)
+    {
+        //simulates a deletion of head by swapping data with the second node in list and deleting the second node
+        node* nodeToDelete = currentNode->nextNode;
+        node** nodeToDeletePtr = &nodeToDelete;
+        currentNode->data = currentNode->nextNode->data;
+        currentNode->nextNode->nextNode->previousNode = currentNode;
+        currentNode->nextNode = currentNode->nextNode->nextNode;
+        free(*nodeToDeletePtr);
+    }
+    else if(currentNode->isHead && getListLength(head) == 2)
+    {
+        //simulates a deletion of head by swapping data with the second node in list and deleting the second node
+        currentNode->data = currentNode->nextNode->data;
+        currentNode->isTail = true;
+
+        free(currentNode->nextNode);
+        currentNode->nextNode = nullptr;
+    }
+    //index starts counting from 0 while getListLength starts counting from 1
+    else if(index == getListLength(head)-1)
+    {
+        popFromList(head);
+    }
 }
