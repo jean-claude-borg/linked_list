@@ -2,23 +2,23 @@
 
 int main()
 {
-    list list = createList(10);
-    pushToList(list,11);
-    pushToList(list, 12);
-    pushToList(list, 13);
-    pushToList(list, 14);
+    list list1 = createList(100);
+    list list2 = createList(90);
 
-    //pushToListAt(list,100,0);
-    printList(list);
-    popFromListAt(list, 0);
-    popFromListAt(list, 0);
-    popFromListAt(list, 0);
-    popFromListAt(list, 0);
-    popFromListAt(list, 0);
+    pushToList(list1,80);
+    pushToList(list2,70);
 
-    printf("\n--------------------------");
-    printList(list);
-    deleteList(list, &list);
+    mergeLists(list1, list2);
+    printList(list1);
+    printf("\n---------------");
+    sortListAscending(list1);
+    printList(list1);
+    printf("\n----------------");
+
+    popFromList(list1);
+    pushToList(list1, 69);
+    printList(list1);
+    printf("\nLength:\t%d", getListLength(list1));
 
     return 0;
 }

@@ -300,7 +300,7 @@ void sortListAscending(node* head)
     free(array);
 }
 
-//TODO Add sortListDescending, mergeLists, mergeListsAt
+//TODO Add sortListDescending, mergeListsAt
 
 void deleteList(node* head, node** headPtr)
 {
@@ -371,7 +371,22 @@ void popFromListAt(node* head, int index)
     }
 }
 
-void mergeLists()
+//appends head2 to the end of head1
+void mergeLists(node* head1, node* head2)
 {
-    
+    if(head1 == nullptr || head2 == nullptr)
+    {
+        fprintf(stderr, "Error: one or both of the given lists for merging do not exist");
+        return;
+    }
+
+    node* currentNode = head1;
+    while(currentNode->isTail == false)
+    {
+        currentNode = currentNode->nextNode;
+    }
+    currentNode->isTail = false;
+    currentNode->nextNode = head2;
+    head2->isHead = false;
+    head2->previousNode = currentNode;
 }
