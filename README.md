@@ -1,5 +1,18 @@
 # A Doubly Linked List Library Written in C
  Allows for dynamic use of integers only(for now)
+ 
+### Basic Usage
+#include "list.h"\
+int main(){\
+&emsp; list list1 = createList(100);\
+&emsp; pushToList(list1, 101);\
+&emsp; printList(list1);\
+&emsp; deleteList(list1, &list1);\
+&emsp; return 0;\
+}\
+The above creates a list(list1) containing 1 node which contains the integer value 100.\
+It then adds a second node to the list containing the value 101.\
+List1 is then printed to the screen then it is deleted.
 
 ### The following is a list of all supported functions:
 __node* createList(int data):__ <br> &emsp;             returns a pointer to the first node(head) of a new list containing the supplied data\
