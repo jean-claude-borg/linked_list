@@ -1,4 +1,5 @@
 #include "list.h"
+#include "stdio.h"
 
 int main()
 {
@@ -16,7 +17,7 @@ int main()
     printf("\n----------------");
 
     popFromList(list1);
-    pushToList(list1, 69);
+    pushToList(list1, 55);
     printList(list1);
     printf("\nLength:\t%d", getListLength(list1));
 
