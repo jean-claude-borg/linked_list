@@ -1,6 +1,7 @@
 # A Doubly Linked List Library Written in C
- Allows for dynamic use of integers only(for now)
- 
+ Allows for dynamic use of integers only(for now)\
+ This project is licensed under the terms of the MIT license
+
 ### Basic Usage
 #include "list.h"\
 int main(){\
