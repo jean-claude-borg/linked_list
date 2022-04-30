@@ -1,4 +1,4 @@
-# A Linked List Library Written in C
+# A Doubly Linked List Library Written in C
  Allows for dynamic use of integers only(for now)
 
 ### The following is a list of all supported functions:
